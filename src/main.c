@@ -12,10 +12,10 @@
 
 #include "../include/cub3d.h"
 
-int32_t main(int32_t argc, char **argv)
+int32_t	main(int32_t argc, char **argv)
 {
 	t_app *app;
-	
+
 	gc_init();
 	app = gc_malloc(sizeof(t_app));
 	ft_memset(app, 0, sizeof(t_app));

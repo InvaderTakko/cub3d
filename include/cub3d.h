@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 17:46:21 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/05 18:17:12 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void    *gc_malloc(size_t size);
 t_gc    *gc_init(void);
 void    gc_free_all(void);
 
+//utils
+char    *ft_strstr(const char *haystack, const char *needle);
+int32_t exit_with_error(const char *message, t_app *app);
 
 //mlx
 int32_t mlx_setup(t_app *app);
