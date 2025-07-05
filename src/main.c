@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 16:16:15 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/05 17:46:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 int32_t main(int32_t argc, char **argv)
 {
 	t_app *app;
-	app = malloc(sizeof(t_app));
+	
+	gc_init();
+	app = gc_malloc(sizeof(t_app));
 	ft_memset(app, 0, sizeof(t_app));
 	if (argc != 2)
 	{
@@ -29,5 +31,6 @@ int32_t main(int32_t argc, char **argv)
 	// img innit
 
 	// key/ render loops
+	gc_free_all();
 	return (0);
 }

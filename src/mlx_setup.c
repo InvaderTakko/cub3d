@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:05:25 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 16:34:34 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/05 17:20:45 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int32_t mlx_setup(t_app *app)
     for (uint32_t i = 0; i < 800 * 600; i++)
         pixels[i] = 0xFF0000FF;
 
-    mlx_image_to_window(app->mlx, app->image, 0, 0);
+	mlx_image_to_window(app->mlx, app->image, 0, 0);
 
     // keep window open
     mlx_loop(app->mlx);
