@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 17:46:03 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/05 19:52:13 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ int32_t	main(int32_t argc, char **argv)
 	}
 	ft_printf("Welcome to Cub3D!\n");
 
+	if (parse_map(app, argv[1]) != 0)
+	{
+		ft_printf("Error: Failed to parse map file\n");
+		gc_free_all();
+		return (1);
+	}
 	// open and parse map
 	mlx_setup(app);
 	// img innit
