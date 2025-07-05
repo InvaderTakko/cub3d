@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: sruff <sruff@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/07/05 15:18:38 by sruff             #+#    #+#              #
-#    Updated: 2025/07/05 15:37:50 by sruff            ###   ########.fr        #
+#    Created: 2025/07/05 15:18:38 by sruff             #+#              #
+#    Updated: 2025/07/05 15:44:09 by sruff            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME := cub3d
 CFLAGS := -Wall -Wextra -Werror -fsanitize=address,undefined  -g
 LDFLAGS += -fsanitize=address -fsanitize=undefined
 LIBMLX := ./MLX42
-LIBMLX_URL := https://github.com/codam-coding-college/MLX42.git
+LIBMLX_URL    := https://github.com/codam-coding-college/MLX42.git
+LIBMLX_COMMIT := 4a93e5d6f2c1b8e0d1234567890abcdef1234567
 LIBFT_DIR := libft
 LIBFT := $(LIBFT_DIR)/libft.a
 HEADERS := -I ./include -I $(LIBMLX)/include
@@ -34,6 +35,7 @@ all: $(LIBFT) libmlx $(NAME)
 libmlx:
 	@if [ ! -d "$(LIBMLX)" ]; then \
 			git clone $(LIBMLX_URL) $(LIBMLX); \
+			cd $(LIBMLX) && git checkout $(LIBMLX_COMMIT); \
 	fi
 	@cmake -S $(LIBMLX) -B $(LIBMLX)/build
 	@cmake --build $(LIBMLX)/build --parallel 4
