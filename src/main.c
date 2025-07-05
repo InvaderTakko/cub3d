@@ -6,19 +6,28 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 15:35:36 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/05 16:16:15 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "../include/cub3d.h"
 
-int main(int argc, char **argv)
+int32_t main(int32_t argc, char **argv)
 {
+	t_app *app;
+	app = malloc(sizeof(t_app));
+	ft_memset(app, 0, sizeof(t_app));
 	if (argc != 2)
 	{
-		printf("Usage: %s <map_file>\n", argv[1]);
-		return 1;
+		ft_printf("Usage: %s <path to map_file>\n", argv[0]);
+		return (1);
 	}
-	printf("Welcome to Cub3D!\n");
-	return 0;
+	ft_printf("Welcome to Cub3D!\n");
+
+	// open and parse map
+	mlx_setup(app);
+	// img innit
+
+	// key/ render loops
+	return (0);
 }
