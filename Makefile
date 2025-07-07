@@ -15,9 +15,7 @@ CFLAGS := -Wall -Wextra -Werror -fsanitize=address,undefined  -g
 LDFLAGS += -fsanitize=address -fsanitize=undefined
 LIBMLX := ./MLX42
 LIBMLX_URL    := https://github.com/codam-coding-college/MLX42.git
-LIBMLX_COMMIT := 4a93e5d6f2c1b8e0d1234567890abcdef1234567
-LIBFT_DIR := libft
-LIBFT := $(LIBFT_DIR)/libft.a
+LIBMLX_COMMIT := ce254c3a19af8176787601a2ac3490100a5c4c61
 HEADERS := -I ./include -I $(LIBMLX)/include
 
 # Directories
