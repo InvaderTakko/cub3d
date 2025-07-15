@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 20:04:41 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/07 20:34:58 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,25 @@ typedef struct s_app
 	mlx_image_t	*image;
 	t_map		*map;
 } t_app;
+
+// parsing
+typedef struct s_map_lines_data
+{
+	char	***temp_map_lines;
+	int32_t	*temp_map_height;
+	int32_t	*temp_map_capacity;
+}	t_map_lines_data;
+
+typedef struct s_parse_file_data
+{
+	int32_t		fd;
+	char		*line;
+	char		*trimmed_line;
+	char		*newline;
+	bool		elements_fully_parsed;
+	int32_t		i;
+	bool		all_found;
+}	t_parse_file_data;
 
 //garbage collector
 t_gc    *get_gc_addr(void);
