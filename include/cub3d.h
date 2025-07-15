@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 19:07:02 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 19:35:22 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,23 @@ typedef struct s_player
 	double	plane_y;
 }			t_player;
 
+typedef struct s_images
+{
+	mlx_texture_t	*txt_no; // Texture for North wall
+	mlx_texture_t	*txt_so; // Texture for South wall
+	mlx_texture_t	*txt_ea; // Texture for East wall
+	mlx_texture_t	*txt_we; // Texture for West wall
+	mlx_image_t		*screen;
+}		t_images;
+
 typedef struct s_app
 {
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_map		*map;
 	t_player	player;
-} t_app;
+	t_images	*img;
+}		t_app;
 
 // parsing
 typedef struct s_map_lines_data
@@ -135,7 +145,7 @@ int32_t	validate_texture_file(const char *path);
 char	**str_array_dup(char **src, int32_t height);
 
 // mlx_setup
-int32_t mlx_setup(t_app *app);
+void mlx_setup(t_app *app);
 
 // map parsing
 int32_t parse_map(t_app *app, const char *file);

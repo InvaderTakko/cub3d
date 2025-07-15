@@ -6,11 +6,20 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/05 19:52:13 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 20:01:34 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+
+static void	main_loop_hook(void *param)
+{
+	t_app	*app;
+
+	app = param;
+	// movehook(app);
+	// render(app);
+}
 
 int32_t	main(int32_t argc, char **argv)
 {
@@ -29,7 +38,7 @@ int32_t	main(int32_t argc, char **argv)
 	if (parse_map(app, argv[1]) != 0)
 	{
 		ft_printf("Error: Failed to parse map file\n");
-		gc_free_all();
+		// gc_free_all();
 		return (1);
 	}
 	// open and parse map
@@ -37,6 +46,8 @@ int32_t	main(int32_t argc, char **argv)
 	// img innit
 
 	// key/ render loops
+	mlx_loop_hook(app->mlx, main_loop_hook, app);
+	mlx_loop(app->mlx);
 	gc_free_all();
 	return (0);
 }
