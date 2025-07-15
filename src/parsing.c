@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 18:00:46 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:54:01 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,5 +436,6 @@ int32_t	parse_map(t_app *app, const char *file)
 	// validate the map
 	validate_map(app);
 	// init game map and player pos
+	ini
 	return (0);
 }

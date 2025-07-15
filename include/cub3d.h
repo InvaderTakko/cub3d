@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 17:57:51 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:50:46 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,15 @@ typedef struct s_parse_file_data
 	bool		all_found;
 }	t_parse_file_data;
 
+// flood fill
+typedef struct s_flood_fill_data
+{
+	int32_t	x;
+	int32_t	y;
+	int32_t	width;
+	int32_t	height;
+}	t_flood_fill_data;
+
 //garbage collector
 t_gc    *get_gc_addr(void);
 t_gc_node    *gc_add_node(void *address);
@@ -112,6 +121,7 @@ int32_t    exit_with_error(const char *message, t_app *app);
 char    *gc_strdup(const char *s);
 int32_t	ft_isspace(int32_t c);
 int32_t	validate_texture_file(const char *path);
+char	**str_array_dup(char **src, int32_t height);
 
 // mlx_setup
 int32_t mlx_setup(t_app *app);
@@ -124,5 +134,10 @@ void	pad_map_grid(t_app *app);
 
 // validate map
 void	validate_map(t_app *app);
+
+// check_walls
+void check_walls_enclosed(t_app *app);
+bool	flood_fill(char **grid, t_flood_fill_data *data);
+bool	flood_fill_recursive(char **grid, t_flood_fill_data *data);
 
 #endif

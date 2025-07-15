@@ -1,5 +1,30 @@
 #include "../include/cub3d.h"
 
+char	**str_array_dup(char **src, int32_t height)
+{
+	char	**dest;
+	int32_t	i;
+
+	if (!src)
+		return (NULL);
+	dest = gc_malloc(sizeof(char *) * (height + 1));
+	if (!dest)
+		return (NULL);
+	i = 0;
+	while (i < height)
+	{
+		dest[i] = gc_strdup(src[i]);
+		if (!dest[i])
+		{
+			// If gc_strdup fails, gc will handle cleanup.
+			// No need for free_str_array(dest, i); here.
+			return (NULL);
+		}
+		i++;
+	}
+	dest[i] = NULL;
+	return (dest);
+}
 
 int32_t	validate_texture_file(const char *path)
 {
