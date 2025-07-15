@@ -1,5 +1,11 @@
 #include "../include/cub3d.h"
 
+int32_t	ft_isspace(int32_t c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'
+		|| c == '\r');
+}
+
 char	*ft_strpbrk(const char *s, const char *charset)
 {
 	while (*s)

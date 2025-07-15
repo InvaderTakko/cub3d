@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:17:03 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 16:40:59 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,18 @@
 # include "../libft/ft_printf_bonus.h"
 # include "../libft/get_next_line.h"
 
-# define ELEMENT_COUNT 6  // Add this line
+// # define ELEMENT_COUNT 6 
+
+typedef enum e_element
+{
+    NORTH_TEXTURE,
+    SOUTH_TEXTURE,
+    WEST_TEXTURE,
+    EAST_TEXTURE,
+    FLOOR_COLOR,
+    CEILING_COLOR,
+    ELEMENT_COUNT
+}           t_element;
 
 // Garbage Collector
 typedef struct s_gc_node
@@ -44,13 +55,19 @@ typedef struct s_gc
 //cub3d
 typedef struct s_map
 {
-	char	*path;
-	char	**data;
 	char	**grid;
-	int32_t	grid_height;
-	int32_t	width;
-	int32_t	height;
-	bool	elements_found[ELEMENT_COUNT];
+	int32_t		grid_width;
+	int32_t		grid_height;
+	char		*north_texture_path;
+	char		*south_texture_path;
+	char		*west_texture_path;
+	char		*east_texture_path;
+	int32_t		floor_color[3];
+	int32_t		ceiling_color[3];
+	uint8_t		elements_found[ELEMENT_COUNT];
+	int32_t		player_start_x;
+	int32_t		player_start_y;
+	int8_t		player_start_dir;
 } t_map;
 
 typedef struct s_app
@@ -93,6 +110,7 @@ char	*ft_strpbrk(const char *s, const char *charset);
 char    *ft_strstr(const char *haystack, const char *needle);
 int32_t    exit_with_error(const char *message, t_app *app);
 char    *gc_strdup(const char *s);
+int32_t	ft_isspace(int32_t c);
 
 // mlx_setup
 int32_t mlx_setup(t_app *app);

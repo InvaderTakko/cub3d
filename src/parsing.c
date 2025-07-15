@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:17:30 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 16:39:59 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,21 @@
 // 	return (0); // illegal element
 // }
 
+static bool	check_valid_color_format(char *str, t_app *app)
+{
+	while (*str)
+	{
+		if (!ft_isdigit(*str) && *str != ',' && !ft_isspace(*str))
+		{
+			exit_with_error("Invalid RGB values: non-numeric characters found.",
+				app);
+			return (false);
+		}
+		str++;
+	}
+	return (true);
+}
+
 static char	*trim_line(char *line)
 {
 	char	*trimmed;
@@ -87,6 +102,113 @@ static bool	all_elements_found(t_app *app)
 	}
 	return (true);
 }
+static void	parse_color(char *line, int32_t color[3], t_app *app)
+{
+	char	**rgb_values;
+	int32_t	count;
+
+	count = 0;
+	// if (!check_valid_color_format(line, app))
+	// 	return ;
+	rgb_values = ft_split(line, ',');
+	if (!rgb_values)
+		exit_with_error("Memory allocation failed for color parsing.", app);
+	while (rgb_values[count])
+		count++;
+	if (count != 3)
+	{
+		// free_str_array(rgb_values, count); prob not needed bc gc
+		exit_with_error("Invalid RGB color format: must have exactly 3 values.",
+			app);
+		return ;
+	}
+	// assign_color_values(rgb_values, color, count, app);
+	// free_str_array(rgb_values, count); gc
+}
+
+static bool	process_texture(char *value, t_app *app, int32_t texture_type,
+		char **texture_path_ptr, const char *error_msg)
+{
+	t_map	*map;
+
+	map = app->map;
+	if (map->elements_found[texture_type])
+		exit_with_error((char *)error_msg, app);
+	// if (!validate_texture_file(value))
+	// 	exit_with_error("Texture file not found or inaccessible.", app);
+	*texture_path_ptr = gc_strdup(value);
+	map->elements_found[texture_type] = true;
+	return (true);
+}
+
+static bool	handle_texture_element(char *key, char *value, t_app *app,
+		int32_t texture_type, char **texture_path_ptr)
+{
+	if (strcmp(key, "NO") == 0 && texture_type == NORTH_TEXTURE)
+		return (process_texture(value, app, NORTH_TEXTURE, texture_path_ptr,
+				"Duplicate NO texture."));
+	else if (strcmp(key, "SO") == 0 && texture_type == SOUTH_TEXTURE)
+		return (process_texture(value, app, SOUTH_TEXTURE, texture_path_ptr,
+				"Duplicate SO texture."));
+	else if (strcmp(key, "WE") == 0 && texture_type == WEST_TEXTURE)
+		return (process_texture(value, app, WEST_TEXTURE, texture_path_ptr,
+				"Duplicate WE texture."));
+	else if (strcmp(key, "EA") == 0 && texture_type == EAST_TEXTURE)
+		return (process_texture(value, app, EAST_TEXTURE, texture_path_ptr,
+				"Duplicate EA texture."));
+	return (false);
+}
+
+static bool	handle_color_element(char *key, char *value, t_app *app,
+		int32_t color_type, int32_t *color_array)
+{
+	t_map	*map;
+
+	map = app->map;
+	if (strcmp(key, "F") == 0 && color_type == FLOOR_COLOR)
+	{
+		if (map->elements_found[FLOOR_COLOR])
+			exit_with_error("Duplicate F color.", app);
+		parse_color(value, color_array, app);
+		map->elements_found[FLOOR_COLOR] = true;
+		return (true);
+	}
+	else if (strcmp(key, "C") == 0 && color_type == CEILING_COLOR)
+	{
+		if (map->elements_found[CEILING_COLOR])
+			exit_with_error("Duplicate C color.", app);
+		parse_color(value, color_array, app);
+		map->elements_found[CEILING_COLOR] = true;
+		return (true);
+	}
+	return (false);
+}
+
+static bool	element_handler(char *line, char *value, t_app *app)
+{
+	t_map	*map;
+
+	map = app->map;
+	if (handle_texture_element(line, value, app, NORTH_TEXTURE,
+			&map->north_texture_path))
+		return (true);
+	if (handle_texture_element(line, value, app, SOUTH_TEXTURE,
+			&map->south_texture_path))
+		return (true);
+	if (handle_texture_element(line, value, app, WEST_TEXTURE,
+			&map->west_texture_path))
+		return (true);
+	if (handle_texture_element(line, value, app, EAST_TEXTURE,
+			&map->east_texture_path))
+		return (true);
+	if (handle_color_element(line, value, app, FLOOR_COLOR, map->floor_color))
+		return (true);
+	if (handle_color_element(line, value, app, CEILING_COLOR,
+			map->ceiling_color))
+		return (true);
+	return (false);
+}
+
 static bool	parse_element(char *line, t_app *app)
 {
 	char	*value;
@@ -105,7 +227,7 @@ static bool	parse_element(char *line, t_app *app)
 	*value++ = '\0';
 	while (*value && (*value == ' ' || *value == '\t'))
 		value++;
-	// return (element_handler(line, value, app));
+	return (element_handler(line, value, app));
 }
 
 static bool	process_element_line(t_parse_file_data *file_data, t_app *app)
