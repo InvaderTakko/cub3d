@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:51:02 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 17:57:51 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,11 @@ int32_t mlx_setup(t_app *app);
 
 // map parsing
 int32_t parse_map(t_app *app, const char *file);
+
+// padding of grid
+void	pad_map_grid(t_app *app);
+
+// validate map
+void	validate_map(t_app *app);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 17:16:40 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 18:00:46 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -432,7 +432,9 @@ int32_t	parse_map(t_app *app, const char *file)
 		exit_with_error("Map file must have a .cub extension.", NULL);
 	read_and_parse_file(file, app);
 	// pad the grid of the map
+	pad_map_grid(app);
 	// validate the map
+	validate_map(app);
 	// init game map and player pos
 	return (0);
 }
