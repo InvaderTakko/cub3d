@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/07 20:34:58 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 16:17:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ t_gc    *gc_init(void);
 void    gc_free_all(void);
 
 //utils
+char	*ft_strpbrk(const char *s, const char *charset);
 char    *ft_strstr(const char *haystack, const char *needle);
 int32_t    exit_with_error(const char *message, t_app *app);
 char    *gc_strdup(const char *s);

@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:03:23 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 16:17:30 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,44 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-static int32_t	parse_element(const char *line, t_app *app)
-{
-	// parse the line for elements like NO, C, F, S, etc
-	if (ft_strncmp(line, "NO ", 3) == 0)
-	{
-		app->map->path = ft_strdup(line + 3);
-		if (!app->map->path)
-			exit_with_error("Memory allocation failed for NO path.", app);
-		app->map->elements_found[0] = true;
-		return (1);
-	}
-	else if (ft_strncmp(line, "SO ", 3) == 0)
-	{
-		app->map->elements_found[1] = true;
-		return (1);
-	}
-	else if (ft_strncmp(line, "EA ", 3) == 0)
-	{
-		app->map->elements_found[2] = true;
-		return (1);
-	}
-	else if (ft_strncmp(line, "WE ", 3) == 0)
-	{
-		app->map->elements_found[3] = true;
-		return (1);
-	}
-	else if (ft_strncmp(line, "F ", 2) == 0)
-	{
-		app->map->elements_found[4] = true;
-		return (1);
-	}
-	else if (ft_strncmp(line, "C ", 2) == 0)
-	{
-		app->map->elements_found[5] = true;
-		return (1);
-	}
-	return (0); // illegal element
-}
+// static int32_t	parse_element(const char *line, t_app *app)
+// {
+// 	// parse the line for elements like NO, C, F, S, etc
+// 	if (ft_strncmp(line, "NO ", 3) == 0)
+// 	{
+// 		app->map->path = ft_strdup(line + 3);
+// 		if (!app->map->path)
+// 			exit_with_error("Memory allocation failed for NO path.", app);
+// 		app->map->elements_found[0] = true;
+// 		return (1);
+// 	}
+// 	else if (ft_strncmp(line, "SO ", 3) == 0)
+// 	{
+// 		app->map->elements_found[1] = true;
+// 		return (1);
+// 	}
+// 	else if (ft_strncmp(line, "EA ", 3) == 0)
+// 	{
+// 		app->map->elements_found[2] = true;
+// 		return (1);
+// 	}
+// 	else if (ft_strncmp(line, "WE ", 3) == 0)
+// 	{
+// 		app->map->elements_found[3] = true;
+// 		return (1);
+// 	}
+// 	else if (ft_strncmp(line, "F ", 2) == 0)
+// 	{
+// 		app->map->elements_found[4] = true;
+// 		return (1);
+// 	}
+// 	else if (ft_strncmp(line, "C ", 2) == 0)
+// 	{
+// 		app->map->elements_found[5] = true;
+// 		return (1);
+// 	}
+// 	return (0); // illegal element
+// }
 
 static char	*trim_line(char *line)
 {
@@ -87,6 +87,55 @@ static bool	all_elements_found(t_app *app)
 	}
 	return (true);
 }
+static bool	parse_element(char *line, t_app *app)
+{
+	char	*value;
+	char	*newline;
+
+	while (*line && (*line == ' ' || *line == '\t'))
+		line++;
+	newline = ft_strchr(line, '\n');
+	if (newline)
+		*newline = '\0';
+	if (*line == '\0')
+		return (true);
+	value = ft_strpbrk(line, " \t");
+	if (!value)
+		return (false);
+	*value++ = '\0';
+	while (*value && (*value == ' ' || *value == '\t'))
+		value++;
+	// return (element_handler(line, value, app));
+}
+
+static bool	process_element_line(t_parse_file_data *file_data, t_app *app)
+{
+	if (parse_element(file_data->trimmed_line, app))
+	{
+		file_data->all_found = true;
+		file_data->i = 0;
+		while (file_data->i < ELEMENT_COUNT)
+		{
+			if (!app->map->elements_found[file_data->i])
+			{
+				file_data->all_found = false;
+				break ;
+			}
+			file_data->i++;
+		}
+		if (file_data->all_found)
+			file_data->elements_fully_parsed = true;
+		return (true);
+	}
+	else
+	{
+		free(file_data->line);
+		close(file_data->fd);
+		exit_with_error("Invalid line or missing elements before map grid.",
+			app);
+		return (false);
+	}
+}
 
 static void	validate_parsing_results(t_app *app, bool elements_parsed,
 		int map_height)
@@ -115,8 +164,8 @@ static void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 		}
 		if (!file_data->elements_fully_parsed)
 		{
-			// if (!process_element_line(file_data, app))
-			return ;
+			if (!process_element_line(file_data, app))
+				return ;
 		}
 		// else
 		// 	process_map_line(file_data, app, map_data);
@@ -154,7 +203,6 @@ static void	read_and_parse_file(const char *filename, t_app *app)
 	app->map->grid = temp_map_lines;
 	app->map->grid_height = temp_map_height;
 }
-
 
 int32_t	parse_map(t_app *app, const char *file)
 {

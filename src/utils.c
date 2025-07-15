@@ -1,5 +1,16 @@
 #include "../include/cub3d.h"
 
+char	*ft_strpbrk(const char *s, const char *charset)
+{
+	while (*s)
+	{
+		if (ft_strchr(charset, *s))
+			return ((char *)s);
+		s++;
+	}
+	return (NULL);
+}
+
 char	*gc_strdup(const char *s)
 {
 	char	*dup;
