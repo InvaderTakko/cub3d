@@ -1,5 +1,19 @@
 #include "../include/cub3d.h"
 
+
+int32_t	validate_texture_file(const char *path)
+{
+	int32_t	fd;
+
+	if (!path)
+		return (0);
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
+	close(fd);
+	return (1);
+}
+
 int32_t	ft_isspace(int32_t c)
 {
 	return (c == ' ' || c == '\t' || c == '\n' || c == '\v' || c == '\f'

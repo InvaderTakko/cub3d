@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:39:59 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 17:16:40 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,48 +68,106 @@ static bool	check_valid_color_format(char *str, t_app *app)
 	return (true);
 }
 
-static char	*trim_line(char *line)
+static bool	is_valid_color_component(char *str, int32_t *color_component,
+		t_app *app)
 {
-	char	*trimmed;
-	char	*newline;
+	char	*end;
 
-	if (!line)
-		return (NULL);
-	trimmed = line;
-	while (*trimmed && (*trimmed == ' ' || *trimmed == '\t'))
-		trimmed++;
-	newline = ft_strchr(trimmed, '\n');
-	if (newline)
-		*newline = '\0';
-	if (*trimmed == '\0')
+	*color_component = ft_atoi(str);
+	end = str;
+	while (*end && ft_isdigit(*end))
+		end++;
+	while (*end)
 	{
-		free(line);
-		return (NULL);
-	}
-	return (line);
-}
-
-static bool	all_elements_found(t_app *app)
-{
-	int	i;
-
-	i = 0;
-	while (i < ELEMENT_COUNT)
-	{
-		if (!app->map->elements_found[i])
+		if (!ft_isspace(*end))
+		{
+			// free_str_array(rgb_values, count);
+			exit_with_error("Invalid character after RGB value.", app);
 			return (false);
-		i++;
+		}
+		end++;
+	}
+	if (*color_component < 0 || *color_component > 255)
+	{
+		// free_str_array(rgb_values, count);
+		exit_with_error("RGB color values must be between 0 and 255.", app);
+		return (false);
 	}
 	return (true);
 }
+
+// static char	*trim_line(char *line)
+// {
+// 	char	*trimmed;
+// 	char	*newline;
+
+// 	if (!line)
+// 		return (NULL);
+// 	trimmed = line;
+// 	while (*trimmed && (*trimmed == ' ' || *trimmed == '\t'))
+// 		trimmed++;
+// 	newline = ft_strchr(trimmed, '\n');
+// 	if (newline)
+// 		*newline = '\0';
+// 	if (*trimmed == '\0')
+// 	{
+// 		free(line);
+// 		return (NULL);
+// 	}
+// 	return (line);
+// }
+
+// static bool	all_elements_found(t_app *app)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (i < ELEMENT_COUNT)
+// 	{
+// 		if (!app->map->elements_found[i])
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
+static bool	validate_and_assign_color_component(char *str_val,
+		int32_t *color_component, t_app *app)
+{
+	char	*str;
+
+	str = str_val;
+	while (*str && (*str == ' ' || *str == '\t'))
+		str++;
+	if (*str == '\0')
+	{
+		// free_str_array(rgb_values, count);
+		exit_with_error("Empty value in RGB color specification.", app);
+		return (false);
+	}
+	return (is_valid_color_component(str, color_component, app));
+}
+
+static void	assign_color_values(char **rgb_values, int32_t color[3], t_app *app)
+{
+	int32_t	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (!validate_and_assign_color_component(rgb_values[i], &color[i], app))
+			return ;
+		i++;
+	}
+}
+
 static void	parse_color(char *line, int32_t color[3], t_app *app)
 {
 	char	**rgb_values;
 	int32_t	count;
 
 	count = 0;
-	// if (!check_valid_color_format(line, app))
-	// 	return ;
+	if (!check_valid_color_format(line, app))
+		return ;
 	rgb_values = ft_split(line, ',');
 	if (!rgb_values)
 		exit_with_error("Memory allocation failed for color parsing.", app);
@@ -122,7 +180,7 @@ static void	parse_color(char *line, int32_t color[3], t_app *app)
 			app);
 		return ;
 	}
-	// assign_color_values(rgb_values, color, count, app);
+	assign_color_values(rgb_values, color, app);
 	// free_str_array(rgb_values, count); gc
 }
 
@@ -134,8 +192,8 @@ static bool	process_texture(char *value, t_app *app, int32_t texture_type,
 	map = app->map;
 	if (map->elements_found[texture_type])
 		exit_with_error((char *)error_msg, app);
-	// if (!validate_texture_file(value))
-	// 	exit_with_error("Texture file not found or inaccessible.", app);
+	if (!validate_texture_file(value))
+		exit_with_error("Texture file not found or inaccessible.", app);
 	*texture_path_ptr = gc_strdup(value);
 	map->elements_found[texture_type] = true;
 	return (true);
@@ -259,14 +317,50 @@ static bool	process_element_line(t_parse_file_data *file_data, t_app *app)
 	}
 }
 
-static void	validate_parsing_results(t_app *app, bool elements_parsed,
-		int map_height)
+// static void	validate_parsing_results(t_app *app, bool elements_parsed,
+// 		int map_height)
+// {
+// 	if (!elements_parsed)
+// 		exit_with_error("Missing one or more map elements.", app);
+// 	if (map_height == 0)
+// 		exit_with_error("Map grid not found in file.", app);
+// }
+
+static void	handle_map_line(char *line, t_app *app, t_map_lines_data *data)
 {
-	if (!elements_parsed)
-		exit_with_error("Missing one or more map elements.", app);
-	if (map_height == 0)
-		exit_with_error("Map grid not found in file.", app);
+	char	**new_temp_map_lines;
+	char	*duplicated_line;
+
+	if (*(data->temp_map_height) >= *(data->temp_map_capacity))
+	{
+		*(data->temp_map_capacity) *= 2;
+		new_temp_map_lines = gc_malloc(sizeof(char *)
+				* (*(data->temp_map_capacity)));
+		if (!new_temp_map_lines)
+		{
+			// free_str_array(*(data->temp_map_lines),
+			// *(data->temp_map_height));
+			exit_with_error("Memory allocation failed.", app);
+		}
+		ft_memcpy(new_temp_map_lines, *(data->temp_map_lines), sizeof(char *)
+			* (*(data->temp_map_height)));
+		*(data->temp_map_lines) = new_temp_map_lines;
+	}
+	duplicated_line = gc_strdup(line);
+	if (!duplicated_line)
+	{
+		exit_with_error("Memory allocation failed for map line duplication.",
+			app);
+	}
+	(*(data->temp_map_lines))[(*(data->temp_map_height))++] = duplicated_line;
 }
+
+static void	process_map_line(t_parse_file_data *file_data, t_app *app,
+		t_map_lines_data *map_data)
+{
+	handle_map_line(file_data->line, app, map_data);
+}
+
 static void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 		t_map_lines_data *map_data)
 {
@@ -289,8 +383,8 @@ static void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 			if (!process_element_line(file_data, app))
 				return ;
 		}
-		// else
-		// 	process_map_line(file_data, app, map_data);
+		else
+			process_map_line(file_data, app, map_data);
 		free(file_data->line);
 	}
 }

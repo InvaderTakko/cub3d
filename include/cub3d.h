@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 16:40:59 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 16:51:02 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,7 @@ char    *ft_strstr(const char *haystack, const char *needle);
 int32_t    exit_with_error(const char *message, t_app *app);
 char    *gc_strdup(const char *s);
 int32_t	ft_isspace(int32_t c);
+int32_t	validate_texture_file(const char *path);
 
 // mlx_setup
 int32_t mlx_setup(t_app *app);
