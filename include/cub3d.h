@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 19:00:11 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 19:07:02 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,5 +150,8 @@ void	validate_map(t_app *app);
 void check_walls_enclosed(t_app *app);
 bool	flood_fill(char **grid, t_flood_fill_data *data);
 bool	flood_fill_recursive(char **grid, t_flood_fill_data *data);
+
+// init_player
+void	init_player(t_app *app);
 
 #endif

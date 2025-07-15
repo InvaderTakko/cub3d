@@ -18,6 +18,9 @@ LIBMLX_URL    := https://github.com/codam-coding-college/MLX42.git
 LIBMLX_COMMIT := ce254c3a19af8176787601a2ac3490100a5c4c61
 HEADERS := -I ./include -I $(LIBMLX)/include
 
+LIBFT_DIR := ./libft
+LIBFT     := $(LIBFT_DIR)/libft.a
+
 # Directories
 SRC_DIR := src
 OBJ_DIR := obj
