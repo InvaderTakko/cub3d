@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 18:50:46 by sruff            ###   ########.fr       */
+/*   Updated: 2025/07/15 19:00:11 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_gc
 {
     t_gc_node    *first;
     t_gc_node    *last;
-    size_t        len;
+    size_t		len;
 }    t_gc;
 
 //cub3d
@@ -70,11 +70,22 @@ typedef struct s_map
 	int8_t		player_start_dir;
 } t_map;
 
+typedef struct s_player
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+}			t_player;
+
 typedef struct s_app
 {
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_map		*map;
+	t_player	player;
 } t_app;
 
 // parsing
