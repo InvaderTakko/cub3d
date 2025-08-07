@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 15:26:26 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:30:33 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ void	handle_movement(t_app *app);
 // render
 void render(t_app *app);
 void	draw_frame(t_app *app);
+int32_t	get_rgba(int32_t r, int32_t g, int32_t b, int32_t a);
 
 
 

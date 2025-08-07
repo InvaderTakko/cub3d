@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 14:21:18 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:33:41 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	main_loop_hook(void *param)
 
 	app = param;
 	movehook(app);
-	// render(app);
+	render(app);
 }
 
 int32_t	main(int32_t argc, char **argv)
@@ -43,9 +43,9 @@ int32_t	main(int32_t argc, char **argv)
 	}
 	// open and parse map
 	mlx_setup(app);
-	// img innit
 
-	// key/ render loops
+
+	// key/render loops
 	mlx_loop_hook(app->mlx, main_loop_hook, app);
 	mlx_loop(app->mlx);
 	gc_free_all();
