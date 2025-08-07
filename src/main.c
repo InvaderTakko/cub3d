@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 20:01:34 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/07 14:21:18 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	main_loop_hook(void *param)
 	t_app	*app;
 
 	app = param;
-	// movehook(app);
+	movehook(app);
 	// render(app);
 }
 

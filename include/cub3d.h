@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 19:35:22 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/07 14:25:34 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # include "../libft/ft_printf_bonus.h"
 # include "../libft/get_next_line.h"
 
-// # define ELEMENT_COUNT 6 
+// # define ELEMENT_COUNT 6
+# define MOVE_SPEED 0.1
 
 typedef enum e_element
 {
@@ -96,6 +97,7 @@ typedef struct s_app
 	t_map		*map;
 	t_player	player;
 	t_images	*img;
+	bool		keys[6]; // W, S, A, D, LEFT, RIGHT
 }		t_app;
 
 // parsing
@@ -163,5 +165,6 @@ bool	flood_fill_recursive(char **grid, t_flood_fill_data *data);
 
 // init_player
 void	init_player(t_app *app);
+void movehook(void *param);
 
 #endif
