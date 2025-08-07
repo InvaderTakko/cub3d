@@ -26,9 +26,21 @@ SRC_DIR := src
 OBJ_DIR := obj
 
 LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -lft
-SRCS := $(shell find $(SRC_DIR) -name '*.c') #temporary wildcard
-
-OBJS := $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,$(SRCS))
+SRCS := \
+  src/main.c \
+  src/render.c \
+  src/render_draw.c \
+  src/player.c \
+  src/utils.c \
+  src/check_walls.c \
+  src/garbago_collector.c \
+  src/init_player.c \
+  src/mlx_setup.c \
+  src/keypress.c \
+  src/pad_map_grid.c \
+  src/parsing.c \
+  src/validate_map.c 
+OBJS := $(patsubst src/%.c,obj/%.o,$(SRCS))
 
 all: $(LIBFT) libmlx $(NAME)
 	@echo "$(NAME) successfully built!"
