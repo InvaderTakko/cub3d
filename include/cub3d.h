@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 14:25:34 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/07 15:26:26 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 
 // # define ELEMENT_COUNT 6
 # define MOVE_SPEED 0.1
+
+# define WINDOW_WIDTH 1024
+# define WINDOW_HEIGHT 768
 
 typedef enum e_element
 {
@@ -167,4 +170,98 @@ bool	flood_fill_recursive(char **grid, t_flood_fill_data *data);
 void	init_player(t_app *app);
 void movehook(void *param);
 
+// move_player
+void	handle_movement(t_app *app);
+
+// render
+void render(t_app *app);
+void	draw_frame(t_app *app);
+
+
+
+typedef struct s_dda_params
+{
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int32_t	*map_x;
+	int32_t	*map_y;
+	double	*side_dist_x;
+	double	*side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int32_t	*step_x;
+	int32_t	*step_y;
+	int32_t	*hit;
+	int32_t	*side;
+}	t_dda_params;
+
+typedef struct s_wall_params
+{
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int32_t	map_x;
+	int32_t	map_y;
+	int32_t	side;
+	int32_t	step_x;
+	int32_t	step_y;
+	double	*perp_wall_dist;
+	int32_t	*line_height;
+	int32_t	*draw_start;
+	int32_t	*draw_end;
+}	t_wall_params;
+
+typedef struct s_texture_params
+{
+	double	perp_wall_dist;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int32_t	side;
+	int32_t	*tex_num;
+	double	*wall_x;
+	int32_t	*tex_x;
+	double	*tex_step;
+	double	*tex_pos;
+	int32_t	draw_start;
+	int32_t	line_height;
+}	t_texture_params;
+
+typedef struct s_vertical_strip_params
+{
+	int32_t	x;
+	int32_t	draw_start;
+	int32_t	draw_end;
+	int32_t	tex_num;
+	int32_t	tex_x;
+	double	tex_step;
+	double	tex_pos;
+	int32_t	side;
+}	t_vertical_strip_params;
+
+typedef struct s_ray_data
+{
+	double	camera_x;
+	double	ray_dir_x;
+	double	ray_dir_y;
+	int32_t	map_x;
+	int32_t	map_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	double	perp_wall_dist;
+	int32_t	step_x;
+	int32_t	step_y;
+	int32_t	hit;
+	int32_t	side;
+	int32_t	line_height;
+	int32_t	draw_start;
+	int32_t	draw_end;
+	int32_t	tex_num;
+	double	wall_x;
+	int32_t	tex_x;
+	double	tex_step;
+	double	tex_pos;
+}	t_ray_data;
+
+void	process_ray(t_app *app, int32_t x, t_ray_data *ray_data);
 #endif
