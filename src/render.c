@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:15 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 15:22:56 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:42:09 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,18 +129,18 @@ static void	calculate_wall_params(t_app *app, t_wall_params *params)
 		*(params->perp_wall_dist) = (params->map_y - app->player.pos_y + (1
 					- params->step_y) / 2) / params->ray_dir_y;
 	// clamp before casting to int32 to avoid overflow
-	raw_height = WINDOW_HEIGHT / *params->perp_wall_dist;
+	raw_height = app->window_height / *params->perp_wall_dist;
 	if (raw_height > INT32_MAX)
 		raw_height = INT32_MAX;
 	*params->line_height = (int32_t)raw_height;
 	// calc half-height first then offset from center
 	half = *params->line_height / 2;
-	*params->draw_start = WINDOW_HEIGHT / 2 - half;
+	*params->draw_start = app->window_height / 2 - half;
 	if (*params->draw_start < 0)
 		*params->draw_start = 0;
-	*params->draw_end = WINDOW_HEIGHT / 2 + half;
-	if (*params->draw_end >= WINDOW_HEIGHT)
-		*params->draw_end = WINDOW_HEIGHT - 1;
+	*params->draw_end = app->window_height / 2 + half;
+	if (*params->draw_end >= app->window_height)
+		*params->draw_end = app->window_height - 1;
 }
 
 // Helper function for texture mapping
@@ -161,7 +161,7 @@ static void	calculate_texture_params(t_app *app, t_texture_params *params)
 	if (params->side == 1 && params->ray_dir_y < 0)
 		*(params->tex_x) = 64 - *(params->tex_x) - 1;
 	*(params->tex_step) = 1.0 * 64 / params->line_height;
-	*(params->tex_pos) = (params->draw_start - WINDOW_HEIGHT / 2
+	*(params->tex_pos) = (params->draw_start - app->window_height / 2
 			+ params->line_height / 2) * (*(params->tex_step));
 }
 
@@ -262,7 +262,7 @@ void	process_ray(t_app *app, int32_t x, t_ray_data *ray_data)
 {
 	t_dda_params	dda_params;
 
-	ray_data->camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
+	ray_data->camera_x = 2 * x / (double)app->window_width - 1;
 	ray_data->ray_dir_x = app->player.dir_x + app->player.plane_x
 		* ray_data->camera_x;
 	ray_data->ray_dir_y = app->player.dir_y + app->player.plane_y

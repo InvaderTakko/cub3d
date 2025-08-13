@@ -3,24 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   mlx_setup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:05:25 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 19:58:45 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/13 21:23:03 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 #include <stdint.h>
 
-#define WINDOW_WIDTH 1024
-#define WINDOW_HEIGHT 768
-
 void	init_img(t_app *app)
 {
-	app->img->screen = mlx_new_image(app->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
+	app->img->screen = mlx_new_image(app->mlx, app->window_width, app->window_height);
 	if (!app->img->screen || !app->img->screen->pixels)
 		exit_with_error("Failed to alloc screen image", app);
+	mlx_image_to_window(app->mlx, app->img->screen, 0, 0);
+}
+// window size changes apply to app
+static void	resize_callback(int32_t width, int32_t height, void *param)
+{
+	t_app	*app;
+
+	app = (t_app *)param;
+	if (!app || !app->img)
+		return ;
+	app->window_width = width;
+	app->window_height = height;
+	if (app->img->screen)
+		mlx_delete_image(app->mlx, app->img->screen);
+	app->img->screen = mlx_new_image(app->mlx, width, height);
+	if (!app->img->screen || !app->img->screen->pixels)
+		exit_with_error("Failed to recreate screen image after resize", app);
 	mlx_image_to_window(app->mlx, app->img->screen, 0, 0);
 }
 
@@ -92,11 +106,14 @@ void	mlx_setup(t_app *app)
 		exit_with_error("Memory allocation failed for images.", app);
 	}
 	ft_bzero(app->img, sizeof(t_images));
-	app->mlx = mlx_init(WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3D", true);
+	app->mlx = mlx_init(app->window_width, app->window_height, "Cub3D", true);
 	if (!app->mlx)
 	{
 		exit_with_error("MLX initialization failed.", app);
 	}
 	load_all_textures(app);
 	init_img(app);
+	
+	// Set resize callback
+	mlx_resize_hook(app->mlx, resize_callback, app);
 }

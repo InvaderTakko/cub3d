@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 15:30:33 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:40:14 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,6 @@
 
 // # define ELEMENT_COUNT 6
 # define MOVE_SPEED 0.1
-
-# define WINDOW_WIDTH 1024
-# define WINDOW_HEIGHT 768
 
 typedef enum e_element
 {
@@ -101,6 +98,8 @@ typedef struct s_app
 	t_player	player;
 	t_images	*img;
 	bool		keys[6]; // W, S, A, D, LEFT, RIGHT
+	int32_t		window_width;
+	int32_t		window_height;
 }		t_app;
 
 // parsing
@@ -136,6 +135,7 @@ t_gc    *get_gc_addr(void);
 t_gc_node    *gc_add_node(void *address);
 void    gc_add_start(void *ptr);
 void    *gc_malloc(size_t size);
+char    **gc_split(char const *s, char c);
 
 t_gc    *gc_init(void);
 void    gc_free_all(void);

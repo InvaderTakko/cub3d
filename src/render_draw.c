@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:15 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 15:29:52 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:42:52 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	cast_rays(t_app *app)
 	t_ray_data	ray_data;
 
 	x = 0;
-	while (x < WINDOW_WIDTH)
+	while (x < app->window_width)
 	{
 		process_ray(app, x, &ray_data);
 		x++;
@@ -36,10 +36,10 @@ static void	draw_ceiling(t_app *app, int32_t ceiling_color)
 	int32_t	y;
 
 	y = 0;
-	while (y < WINDOW_HEIGHT / 2)
+	while (y < app->window_height / 2)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < app->window_width)
 		{
 			mlx_put_pixel(app->img->screen, x, y, ceiling_color);
 			x++;
@@ -53,11 +53,11 @@ static void	draw_floor(t_app *app, int32_t floor_color)
 	int32_t	x;
 	int32_t	y;
 
-	y = WINDOW_HEIGHT / 2;
-	while (y < WINDOW_HEIGHT)
+	y = app->window_height / 2;
+	while (y < app->window_height)
 	{
 		x = 0;
-		while (x < WINDOW_WIDTH)
+		while (x < app->window_width)
 		{
 			mlx_put_pixel(app->img->screen, x, y, floor_color);
 			x++;
