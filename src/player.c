@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 14:29:39 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:43:25 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ static void	handle_rotation(t_app *app)
 	rot_speed = MOVE_SPEED * 0.7;
 	if (app->keys[4]) // left
 	{
-		rotate_player(&app->player, rot_speed);
+		rotate_player(&app->player, -rot_speed);
 	}
 	if (app->keys[5]) // right
 	{
-		rotate_player(&app->player, -rot_speed);
+		rotate_player(&app->player, rot_speed);
 	}
 }
 
