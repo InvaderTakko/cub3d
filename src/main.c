@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/07 15:33:41 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/09 17:43:09 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int32_t	main(int32_t argc, char **argv)
 		// gc_free_all();
 		return (1);
 	}
+	// Set default window dimensions
+	app->window_width = 1024;
+	app->window_height = 768;
 	// open and parse map
 	mlx_setup(app);
 

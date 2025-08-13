@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 18:57:32 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/13 21:32:12 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,20 +168,18 @@ static void	parse_color(char *line, int32_t color[3], t_app *app)
 	count = 0;
 	if (!check_valid_color_format(line, app))
 		return ;
-	rgb_values = ft_split(line, ',');
+	rgb_values = gc_split(line, ',');
 	if (!rgb_values)
 		exit_with_error("Memory allocation failed for color parsing.", app);
 	while (rgb_values[count])
 		count++;
 	if (count != 3)
 	{
-		// free_str_array(rgb_values, count); prob not needed bc gc
 		exit_with_error("Invalid RGB color format: must have exactly 3 values.",
 			app);
 		return ;
 	}
 	assign_color_values(rgb_values, color, app);
-	// free_str_array(rgb_values, count); gc
 }
 
 static bool	process_texture(char *value, t_app *app, int32_t texture_type,
@@ -364,6 +362,9 @@ static void	process_map_line(t_parse_file_data *file_data, t_app *app,
 static void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 		t_map_lines_data *map_data)
 {
+	int32_t	consecutive_empty_lines;
+
+	consecutive_empty_lines = 0;
 	while ((file_data->line = get_next_line(file_data->fd)))
 	{
 		file_data->trimmed_line = file_data->line;
@@ -375,9 +376,20 @@ static void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 			*file_data->newline = '\0';
 		if (*file_data->trimmed_line == '\0')
 		{
+			if (file_data->elements_fully_parsed)
+			{
+				consecutive_empty_lines++;
+				if (consecutive_empty_lines > 1)
+				{
+					free(file_data->line);
+					close(file_data->fd);
+					exit_with_error("Multiple consecutive empty lines found in map section.", app);
+				}
+			}
 			free(file_data->line);
 			continue ;
 		}
+		consecutive_empty_lines = 0;
 		if (!file_data->elements_fully_parsed)
 		{
 			if (!process_element_line(file_data, app))
