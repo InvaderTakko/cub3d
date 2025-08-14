@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/09 17:40:14 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/14 16:40:12 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -265,4 +265,42 @@ typedef struct s_ray_data
 }	t_ray_data;
 
 void	process_ray(t_app *app, int32_t x, t_ray_data *ray_data);
+
+// render_dda.c
+void	init_dda(t_app *app, t_dda_params *params);
+void	execute_dda(t_app *app, t_dda_params *params);
+void	init_dda_params(t_dda_params *params, t_ray_data *ray_data);
+
+// render_texture.c
+uint32_t	get_pixel(mlx_texture_t *texture, int32_t x, int32_t y);
+uint32_t	get_texture_color(t_app *app, int32_t tex_num, int32_t tex_x,
+		int32_t tex_y);
+int32_t	get_texture_num(double ray_dir_x, double ray_dir_y, int32_t side);
+void	calculate_texture_params(t_app *app, t_texture_params *params);
+void	init_texture_params(t_texture_params *params, t_ray_data *ray_data);
+
+// render_walls.c
+void	calculate_wall_params(t_app *app, t_wall_params *params);
+void	init_wall_params(t_wall_params *params, t_ray_data *ray_data);
+void	draw_vertical_strip(t_app *app, t_vertical_strip_params *params);
+void	init_strip_params(t_vertical_strip_params *params, int32_t x,
+		t_ray_data *ray_data);
+void	calculate_and_draw_wall(t_app *app, int32_t x, t_ray_data *ray_data);
+
+// parse_colors.c
+void	parse_color(char *line, int32_t color[3], t_app *app);
+
+// parse_textures.c
+bool	handle_texture_element(char *key, char *value, t_app *app,
+		int32_t texture_type, char **texture_path_ptr);
+bool	handle_color_element(char *key, char *value, t_app *app,
+		int32_t color_type, int32_t *color_array);
+
+// parse_file.c
+void	process_file_lines(t_parse_file_data *file_data, t_app *app,
+		t_map_lines_data *map_data);
+
+// parsing.c
+bool	process_element_line(t_parse_file_data *file_data, t_app *app);
+
 #endif

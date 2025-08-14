@@ -56,27 +56,6 @@ char	*ft_strpbrk(const char *s, const char *charset)
 	return (NULL);
 }
 
-char	*gc_strdup(const char *s)
-{
-	char	*dup;
-	size_t	len;
-	size_t	i;
-
-	if (!s)
-		return (NULL);
-	len = ft_strlen(s);
-	dup = gc_malloc(len + 1);
-	if (!dup)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		dup[i] = s[i];
-		i++;
-	}
-	dup[i] = '\0';
-	return (dup);
-}
 
 int32_t	exit_with_error(const char *message, t_app *app)
 {

@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/09 17:43:25 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/14 16:34:53 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,11 @@ static void	handle_rotation(t_app *app)
 	double	rot_speed;
 
 	rot_speed = MOVE_SPEED * 0.7;
-	if (app->keys[4]) // left
+	if (app->keys[4])
 	{
 		rotate_player(&app->player, -rot_speed);
 	}
-	if (app->keys[5]) // right
+	if (app->keys[5])
 	{
 		rotate_player(&app->player, rot_speed);
 	}
@@ -91,27 +91,12 @@ static void	move_strafe(t_app *app, double strafe_dir)
 void	handle_movement(t_app *app)
 {
 	handle_rotation(app);
-	if (app->keys[0]) // W
+	if (app->keys[0])
 		move_forward_backward(app, 1.0);
-	if (app->keys[1]) // S
+	if (app->keys[1])
 		move_forward_backward(app, -1.0);
-	if (app->keys[2]) // A
+	if (app->keys[2])
 		move_strafe(app, -1.0);
-	if (app->keys[3]) // D
+	if (app->keys[3])
 		move_strafe(app, 1.0);
-}
-
-void	movehook(void *param)
-{
-	t_app *app;
-
-	app = (t_app *)param;
-	if (mlx_is_key_down(app->mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(app->mlx);
-	app->keys[0] = mlx_is_key_down(app->mlx, MLX_KEY_W);
-	app->keys[1] = mlx_is_key_down(app->mlx, MLX_KEY_S);
-	app->keys[2] = mlx_is_key_down(app->mlx, MLX_KEY_A);
-	app->keys[3] = mlx_is_key_down(app->mlx, MLX_KEY_D);
-	app->keys[4] = mlx_is_key_down(app->mlx, MLX_KEY_LEFT);
-	app->keys[5] = mlx_is_key_down(app->mlx, MLX_KEY_RIGHT);
 }

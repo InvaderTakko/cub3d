@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:15 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/09 17:42:52 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/14 16:37:18 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ static void	draw_floor(t_app *app, int32_t floor_color)
 
 void	draw_frame(t_app *app)
 {
-	int32_t ceiling_color;
-	int32_t floor_color;
+	int32_t	ceiling_color;
+	int32_t	floor_color;
 
 	if (!app || !app->img || !app->img->screen)
 		return ;

@@ -25,21 +25,37 @@ LIBFT     := $(LIBFT_DIR)/libft.a
 SRC_DIR := src
 OBJ_DIR := obj
 
-LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -lft
+# OS specific flags
+ifeq ($(shell uname), Darwin)
+    BREW_PREFIX := $(shell brew --prefix)
+    LDFLAGS += -L$(BREW_PREFIX)/lib
+    LIBS := $(LIBMLX)/build/libmlx42.a -lglfw -lm -L$(LIBFT_DIR) -lft
+else
+    LIBS := $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm -L$(LIBFT_DIR) -lft
+endif
+
 SRCS := \
   src/main.c \
   src/render.c \
   src/render_draw.c \
+  src/render_dda.c \
+  src/render_texture.c \
+  src/render_walls.c \
   src/player.c \
   src/utils.c \
   src/check_walls.c \
-  src/garbago_collector.c \
+  src/gc_malloc.c \
+  src/gc_utils.c \
+  src/gc_split.c \
   src/init_player.c \
   src/mlx_setup.c \
   src/keypress.c \
   src/pad_map_grid.c \
   src/parsing.c \
-  src/validate_map.c 
+  src/parse_colors.c \
+  src/parse_textures.c \
+  src/parse_file.c \
+  src/validate_map.c
 OBJS := $(patsubst src/%.c,obj/%.o,$(SRCS))
 
 all: $(LIBFT) libmlx $(NAME)
