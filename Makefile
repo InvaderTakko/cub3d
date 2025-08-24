@@ -60,6 +60,10 @@ SRCS := \
   src/parse_colors.c \
   src/parse_textures.c \
   src/parse_file.c \
+  src/parse_element_utils.c \
+  src/parse_file_utils.c \
+  src/element_handler_utils.c \
+  src/dda_init.c \
   src/validate_map.c
 OBJS := $(patsubst src/%.c,obj/%.o,$(SRCS))
 

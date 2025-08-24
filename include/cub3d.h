@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 21:42:59 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 22:41:02 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,11 @@ void					process_file_lines(t_parse_file_data *file_data,
 							t_app *app, t_map_lines_data *map_data);
 
 // parsing.c
+bool					parse_element(char *line, t_app *app);
 bool					process_element_line(t_parse_file_data *file_data,
+							t_app *app);
+void					read_and_parse_file(const char *filename, t_app *app);
+bool					handle_texture_elements(char *line, char *value,
 							t_app *app);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 21:36:42 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 22:41:20 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,20 @@
 
 static bool	element_handler(char *line, char *value, t_app *app)
 {
-	t_map					*map;
-	t_texture_element_args	ta;
 	t_color_element_args	ca;
 
-	map = app->map;
-	ta = (t_texture_element_args){line, value, app, NORTH_TEXTURE,
-		&map->north_texture_path};
-	if (handle_texture_element(&ta))
-		return (true);
-	ta.texture_type = SOUTH_TEXTURE;
-	ta.texture_path_ptr = &map->south_texture_path;
-	if (handle_texture_element(&ta))
-		return (true);
-	ta.texture_type = WEST_TEXTURE;
-	ta.texture_path_ptr = &map->west_texture_path;
-	if (handle_texture_element(&ta))
-		return (true);
-	ta.texture_type = EAST_TEXTURE;
-	ta.texture_path_ptr = &map->east_texture_path;
-	if (handle_texture_element(&ta))
+	if (handle_texture_elements(line, value, app))
 		return (true);
 	ca = (t_color_element_args){line, value, app, FLOOR_COLOR,
-		map->floor_color};
+		app->map->floor_color};
 	if (handle_color_element(&ca))
 		return (true);
 	ca.color_type = CEILING_COLOR;
-	ca.color_array = map->ceiling_color;
-	if (handle_color_element(&ca))
-		return (true);
-	return (false);
+	ca.color_array = app->map->ceiling_color;
+	return (handle_color_element(&ca));
 }
 
-static bool	parse_element(char *line, t_app *app)
+bool	parse_element(char *line, t_app *app)
 {
 	char	*value;
 	char	*newline;
@@ -67,66 +48,6 @@ static bool	parse_element(char *line, t_app *app)
 	while (*value && (*value == ' ' || *value == '\t'))
 		value++;
 	return (element_handler(line, value, app));
-}
-
-bool	process_element_line(t_parse_file_data *file_data, t_app *app)
-{
-	if (parse_element(file_data->trimmed_line, app))
-	{
-		file_data->all_found = true;
-		file_data->i = 0;
-		while (file_data->i < ELEMENT_COUNT)
-		{
-			if (!app->map->elements_found[file_data->i])
-			{
-				file_data->all_found = false;
-				break ;
-			}
-			file_data->i++;
-		}
-		if (file_data->all_found)
-			file_data->elements_fully_parsed = true;
-		return (true);
-	}
-	else
-	{
-		free(file_data->line);
-		close(file_data->fd);
-		exit_with_error("Invalid line or missing elements before map grid.",
-			app);
-		return (false);
-	}
-}
-
-static void	read_and_parse_file(const char *filename, t_app *app)
-{
-	t_parse_file_data	file_data;
-	t_map_lines_data	map_data;
-	char				**temp_map_lines;
-	int32_t				temp_map_height;
-	int32_t				temp_map_capacity;
-
-	temp_map_lines = NULL;
-	temp_map_height = 0;
-	temp_map_capacity = 10;
-	temp_map_lines = gc_malloc(sizeof(char *) * temp_map_capacity);
-	if (!temp_map_lines)
-		exit_with_error("Memory allocation failed for map lines.", app);
-	map_data.temp_map_lines = &temp_map_lines;
-	map_data.temp_map_height = &temp_map_height;
-	map_data.temp_map_capacity = &temp_map_capacity;
-	file_data.elements_fully_parsed = false;
-	file_data.fd = open(filename, O_RDONLY);
-	if (file_data.fd < 0)
-		exit_with_error("Could not open map file.", NULL);
-	process_file_lines(&file_data, app, &map_data);
-	close(file_data.fd);
-	if (!file_data.elements_fully_parsed)
-		exit_with_error("Missing one or more map elements in file.", app);
-	if (temp_map_height == 0)
-		exit_with_error("Map grid not found in file.", app);
-	app->map->grid = temp_map_lines;
-	app->map->grid_height = temp_map_height;
 }
 
 int32_t	parse_map(t_app *app, const char *file)
