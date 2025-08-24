@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 16:40:19 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 19:01:16 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char					**str_array_dup(char **src, int32_t height);
 void					mlx_setup(t_app *app);
 void					cleanup_mlx(t_app *app);
 void					load_all_textures(t_app *app);
-void					delete_textures(t_images *img);
+void					cleanup_textures(t_images *img);
 // map parsing
 int32_t					parse_map(t_app *app, const char *file);
 
