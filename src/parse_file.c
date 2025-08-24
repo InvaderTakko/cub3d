@@ -46,16 +46,16 @@ static void	process_map_line(t_parse_file_data *file_data, t_app *app,
 }
 
 static void	handle_empty_line(t_parse_file_data *file_data, t_app *app,
-		int32_t *consecutive_empty_lines)
+		int32_t *consecutive_empty_lines, t_map_lines_data *map_data)
 {
-	if (file_data->elements_fully_parsed)
+	if (file_data->elements_fully_parsed && *(map_data->temp_map_height) > 0)
 	{
 		(*consecutive_empty_lines)++;
-		if (*consecutive_empty_lines > 1)
+		if (*consecutive_empty_lines >= 1)
 		{
 			free(file_data->line);
 			close(file_data->fd);
-			exit_with_error("Multiple consecutive empty lines found in map section.", app);
+			exit_with_error("Empty line found in map section.", app);
 		}
 	}
 	free(file_data->line);
@@ -80,7 +80,8 @@ void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 	int32_t	consecutive_empty_lines;
 
 	consecutive_empty_lines = 0;
-	while ((file_data->line = get_next_line(file_data->fd)))
+	file_data->line = get_next_line(file_data->fd);
+	while (file_data->line)
 	{
 		file_data->trimmed_line = file_data->line;
 		while (*file_data->trimmed_line && (*file_data->trimmed_line == ' '
@@ -89,12 +90,16 @@ void	process_file_lines(t_parse_file_data *file_data, t_app *app,
 		file_data->newline = ft_strchr(file_data->trimmed_line, '\n');
 		if (file_data->newline)
 			*file_data->newline = '\0';
-		if (*file_data->trimmed_line == '\0')
+		if (*file_data->trimmed_line == '\0'
+			|| file_data->trimmed_line[0] == '\n')
 		{
-			handle_empty_line(file_data, app, &consecutive_empty_lines);
+			handle_empty_line(file_data, app, &consecutive_empty_lines,
+				map_data);
+			file_data->line = get_next_line(file_data->fd);
 			continue ;
 		}
 		consecutive_empty_lines = 0;
 		process_valid_line(file_data, app, map_data);
+		file_data->line = get_next_line(file_data->fd);
 	}
 }
