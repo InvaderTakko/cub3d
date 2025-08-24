@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 19:01:16 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 19:04:07 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ typedef struct s_player
 
 typedef struct s_images
 {
-	mlx_texture_t *txt_no; // Texture for North wall
-	mlx_texture_t *txt_so; // Texture for South wall
-	mlx_texture_t *txt_ea; // Texture for East wall
-	mlx_texture_t *txt_we; // Texture for West wall
-	mlx_image_t			*screen;
+	mlx_texture_t	*txt_no; // Texture for North wall
+	mlx_texture_t	*txt_so; // Texture for South wall
+	mlx_texture_t	*txt_ea; // Texture for East wall
+	mlx_texture_t	*txt_we; // Texture for West wall
+	mlx_image_t		*screen;
 }						t_images;
 
 typedef struct s_app
@@ -97,7 +97,7 @@ typedef struct s_app
 	t_map				*map;
 	t_player			player;
 	t_images			*img;
-	bool keys[6]; // W, S, A, D, LEFT, RIGHT
+	bool				keys[6]; // W, S, A, D, LEFT, RIGHT
 	int32_t				window_width;
 	int32_t				window_height;
 }						t_app;
