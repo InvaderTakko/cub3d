@@ -56,7 +56,6 @@ char	*ft_strpbrk(const char *s, const char *charset)
 	return (NULL);
 }
 
-
 int32_t	exit_with_error(const char *message, t_app *app)
 {
 	ft_printf("Error: %s\n", message);

@@ -6,12 +6,11 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:15 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/14 16:37:05 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:02:07 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
-
 
 void	process_ray(t_app *app, int32_t x, t_ray_data *ray_data)
 {

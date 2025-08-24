@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:49:31 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/14 16:44:53 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:00:21 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ static int32_t	find_max_grid_width(t_map *map)
 
 void	pad_map_grid(t_app *app)
 {
-	int32_t i;
-	int32_t len;
-	char *new_line;
-	t_map *map;
-	int32_t j;
+	int32_t		i;
+	int32_t		len;
+	char		*new_line;
+	t_map		*map;
+	int32_t		j;
 
 	map = app->map;
 	map->grid_width = find_max_grid_width(map);

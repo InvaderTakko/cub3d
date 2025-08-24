@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:05:25 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/13 21:23:03 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:00:40 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	init_img(t_app *app)
 	mlx_image_to_window(app->mlx, app->img->screen, 0, 0);
 }
 // window size changes apply to app
+
 static void	resize_callback(int32_t width, int32_t height, void *param)
 {
 	t_app	*app;

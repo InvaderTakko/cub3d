@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_walls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:45:30 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 18:52:59 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 14:07:20 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ bool	flood_fill(char **grid, t_flood_fill_data *data)
 
 void	check_walls_enclosed(t_app *app)
 {
-	char **map_copy;
-	t_map *map;
-	t_flood_fill_data ff_data;
+	char				**map_copy;
+	t_map				*map;
+	t_flood_fill_data	ff_data;
 
 	map = app->map;
 	map_copy = str_array_dup(map->grid, map->grid_height);
