@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_walls.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 18:45:30 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 14:07:20 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 18:55:29 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,4 @@ void	check_walls_enclosed(t_app *app)
 	ff_data.height = map->grid_height;
 	if (!flood_fill(map_copy, &ff_data))
 		exit_with_error("Map is not enclosed by walls.", app);
-	// free_str_array(map_copy, map->grid_height);
 }

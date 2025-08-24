@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:53:09 by sruff             #+#    #+#             */
-/*   Updated: 2025/07/15 18:44:40 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 16:38:40 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,5 @@ void	validate_map(t_app *app)
 {
 	check_elements_present(app);
 	check_map_characters(app);
-	check_walls_enclosed(app); // floodfill etc
+	check_walls_enclosed(app);
 }

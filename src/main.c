@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 14:26:56 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 18:55:03 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,6 @@ int32_t	main(int32_t argc, char **argv)
 	mlx_loop(app->mlx);
 	cleanup_mlx(app);
 	gc_free_all();
-	system("leaks cub3d");
 	return (0);
 }
+// system("leaks cub3d");
