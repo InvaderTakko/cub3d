@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_draw.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:15 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 19:07:12 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 22:50:03 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 int32_t	get_rgba(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-	return ((uint32_t)r << 24 | (uint32_t)g << 16 | (uint32_t)b << 8 | (uint32_t)a);
+	return ((uint32_t)r << 24
+		| (uint32_t)g << 16
+		| (uint32_t)b << 8
+		| (uint32_t)a);
 }
 
 void	cast_rays(t_app *app)
