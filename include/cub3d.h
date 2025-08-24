@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 21:34:45 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 21:42:59 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,9 @@ void					movehook(void *param);
 
 // move_player
 void					handle_movement(t_app *app);
+int32_t					is_wall(t_app *app, double x, double y);
+void					move_forward_backward(t_app *app, double move_dir);
+void					move_strafe(t_app *app, double strafe_dir);
 
 // render
 void					render(t_app *app);

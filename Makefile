@@ -44,6 +44,7 @@ SRCS := \
   src/render_texture.c \
   src/render_walls.c \
   src/player.c \
+  src/player_move.c \
   src/utils.c \
   src/utils1.c \
   src/check_walls.c \
