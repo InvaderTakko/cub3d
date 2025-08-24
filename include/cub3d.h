@@ -6,7 +6,7 @@
 /*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 19:04:07 by sruff            ###   ########.fr       */
+/*   Updated: 2025/08/24 21:34:45 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ typedef struct s_player
 
 typedef struct s_images
 {
-	mlx_texture_t	*txt_no; // Texture for North wall
-	mlx_texture_t	*txt_so; // Texture for South wall
-	mlx_texture_t	*txt_ea; // Texture for East wall
-	mlx_texture_t	*txt_we; // Texture for West wall
-	mlx_image_t		*screen;
+	mlx_texture_t *txt_no; // Texture for North wall
+	mlx_texture_t *txt_so; // Texture for South wall
+	mlx_texture_t *txt_ea; // Texture for East wall
+	mlx_texture_t *txt_we; // Texture for West wall
+	mlx_image_t			*screen;
 }						t_images;
 
 typedef struct s_app
@@ -97,7 +97,7 @@ typedef struct s_app
 	t_map				*map;
 	t_player			player;
 	t_images			*img;
-	bool				keys[6]; // W, S, A, D, LEFT, RIGHT
+	bool keys[6]; // W, S, A, D, LEFT, RIGHT
 	int32_t				window_width;
 	int32_t				window_height;
 }						t_app;
@@ -302,11 +302,26 @@ void					calculate_and_draw_wall(t_app *app, int32_t x,
 void					parse_color(char *line, int32_t color[3], t_app *app);
 
 // parse_textures.c
-bool					handle_texture_element(char *key, char *value,
-							t_app *app, int32_t texture_type,
-							char **texture_path_ptr);
-bool					handle_color_element(char *key, char *value, t_app *app,
-							int32_t color_type, int32_t *color_array);
+typedef struct s_texture_element_args
+{
+	char				*key;
+	char				*value;
+	t_app				*app;
+	int32_t				texture_type;
+	char				**texture_path_ptr;
+}						t_texture_element_args;
+
+typedef struct s_color_element_args
+{
+	char				*key;
+	char				*value;
+	t_app				*app;
+	int32_t				color_type;
+	int32_t				*color_array;
+}						t_color_element_args;
+
+bool					handle_texture_element(const t_texture_element_args *args);
+bool					handle_color_element(const t_color_element_args *args);
 
 // parse_file.c
 void					process_file_lines(t_parse_file_data *file_data,

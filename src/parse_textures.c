@@ -6,64 +6,58 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/14 16:37:45 by stefan           #+#    #+#             */
-/*   Updated: 2025/08/14 16:37:45 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 20:32:00 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
+#include <string.h> // strcmp
 
-static bool	process_texture(char *value, t_app *app, int32_t texture_type,
-		char **texture_path_ptr, const char *error_msg)
+static bool	process_texture(const t_texture_element_args *a, const char *msg)
 {
 	t_map	*map;
 
-	map = app->map;
-	if (map->elements_found[texture_type])
-		exit_with_error((char *)error_msg, app);
-	if (!validate_texture_file(value))
-		exit_with_error("Texture file not found or inaccessible.", app);
-	*texture_path_ptr = gc_strdup(value);
-	map->elements_found[texture_type] = true;
+	map = a->app->map;
+	if (map->elements_found[a->texture_type])
+		exit_with_error((char *)msg, a->app);
+	if (!validate_texture_file(a->value))
+		exit_with_error("Texture file not found or inaccessible.", a->app);
+	*(a->texture_path_ptr) = gc_strdup(a->value);
+	map->elements_found[a->texture_type] = true;
 	return (true);
 }
 
-bool	handle_texture_element(char *key, char *value, t_app *app,
-		int32_t texture_type, char **texture_path_ptr)
+bool	handle_texture_element(const t_texture_element_args *a)
 {
-	if (strcmp(key, "NO") == 0 && texture_type == NORTH_TEXTURE)
-		return (process_texture(value, app, NORTH_TEXTURE, texture_path_ptr,
-				"Duplicate NO texture."));
-	else if (strcmp(key, "SO") == 0 && texture_type == SOUTH_TEXTURE)
-		return (process_texture(value, app, SOUTH_TEXTURE, texture_path_ptr,
-				"Duplicate SO texture."));
-	else if (strcmp(key, "WE") == 0 && texture_type == WEST_TEXTURE)
-		return (process_texture(value, app, WEST_TEXTURE, texture_path_ptr,
-				"Duplicate WE texture."));
-	else if (strcmp(key, "EA") == 0 && texture_type == EAST_TEXTURE)
-		return (process_texture(value, app, EAST_TEXTURE, texture_path_ptr,
-				"Duplicate EA texture."));
+	if (strcmp(a->key, "NO") == 0 && a->texture_type == NORTH_TEXTURE)
+		return (process_texture(a, "Duplicate NO texture."));
+	if (strcmp(a->key, "SO") == 0 && a->texture_type == SOUTH_TEXTURE)
+		return (process_texture(a, "Duplicate SO texture."));
+	if (strcmp(a->key, "WE") == 0 && a->texture_type == WEST_TEXTURE)
+		return (process_texture(a, "Duplicate WE texture."));
+	if (strcmp(a->key, "EA") == 0 && a->texture_type == EAST_TEXTURE)
+		return (process_texture(a, "Duplicate EA texture."));
 	return (false);
 }
 
-bool	handle_color_element(char *key, char *value, t_app *app,
-		int32_t color_type, int32_t *color_array)
+bool	handle_color_element(const t_color_element_args *a)
 {
 	t_map	*map;
 
-	map = app->map;
-	if (strcmp(key, "F") == 0 && color_type == FLOOR_COLOR)
+	map = a->app->map;
+	if (strcmp(a->key, "F") == 0 && a->color_type == FLOOR_COLOR)
 	{
 		if (map->elements_found[FLOOR_COLOR])
-			exit_with_error("Duplicate F color.", app);
-		parse_color(value, color_array, app);
+			exit_with_error("Duplicate F color.", a->app);
+		parse_color(a->value, a->color_array, a->app);
 		map->elements_found[FLOOR_COLOR] = true;
 		return (true);
 	}
-	else if (strcmp(key, "C") == 0 && color_type == CEILING_COLOR)
+	if (strcmp(a->key, "C") == 0 && a->color_type == CEILING_COLOR)
 	{
 		if (map->elements_found[CEILING_COLOR])
-			exit_with_error("Duplicate C color.", app);
-		parse_color(value, color_array, app);
+			exit_with_error("Duplicate C color.", a->app);
+		parse_color(a->value, a->color_array, a->app);
 		map->elements_found[CEILING_COLOR] = true;
 		return (true);
 	}

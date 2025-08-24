@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:15:48 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 13:13:48 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 21:36:42 by sruff            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,34 @@
 
 static bool	element_handler(char *line, char *value, t_app *app)
 {
-	t_map	*map;
+	t_map					*map;
+	t_texture_element_args	ta;
+	t_color_element_args	ca;
 
 	map = app->map;
-	if (handle_texture_element(line, value, app, NORTH_TEXTURE,
-			&map->north_texture_path))
+	ta = (t_texture_element_args){line, value, app, NORTH_TEXTURE,
+		&map->north_texture_path};
+	if (handle_texture_element(&ta))
 		return (true);
-	if (handle_texture_element(line, value, app, SOUTH_TEXTURE,
-			&map->south_texture_path))
+	ta.texture_type = SOUTH_TEXTURE;
+	ta.texture_path_ptr = &map->south_texture_path;
+	if (handle_texture_element(&ta))
 		return (true);
-	if (handle_texture_element(line, value, app, WEST_TEXTURE,
-			&map->west_texture_path))
+	ta.texture_type = WEST_TEXTURE;
+	ta.texture_path_ptr = &map->west_texture_path;
+	if (handle_texture_element(&ta))
 		return (true);
-	if (handle_texture_element(line, value, app, EAST_TEXTURE,
-			&map->east_texture_path))
+	ta.texture_type = EAST_TEXTURE;
+	ta.texture_path_ptr = &map->east_texture_path;
+	if (handle_texture_element(&ta))
 		return (true);
-	if (handle_color_element(line, value, app, FLOOR_COLOR, map->floor_color))
+	ca = (t_color_element_args){line, value, app, FLOOR_COLOR,
+		map->floor_color};
+	if (handle_color_element(&ca))
 		return (true);
-	if (handle_color_element(line, value, app, CEILING_COLOR,
-			map->ceiling_color))
+	ca.color_type = CEILING_COLOR;
+	ca.color_array = map->ceiling_color;
+	if (handle_color_element(&ca))
 		return (true);
 	return (false);
 }

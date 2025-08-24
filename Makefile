@@ -10,9 +10,11 @@
 #                                                                              #
 # **************************************************************************** #
 
+
+# gotta go fast: -ffast-math -Ofast -mtune=native -march=native -funroll-loops
 NAME := cub3d
-CFLAGS := -Wall -Wextra -Werror -fsanitize=address,undefined  -g
-LDFLAGS += -fsanitize=address -fsanitize=undefined
+CFLAGS := -Wall -Wextra -Werror -g
+LDFLAGS +=  -fsanitize=address -fsanitize=undefined 
 LIBMLX := ./MLX42
 LIBMLX_URL    := https://github.com/codam-coding-college/MLX42.git
 LIBMLX_COMMIT := ce254c3a19af8176787601a2ac3490100a5c4c61
@@ -43,11 +45,13 @@ SRCS := \
   src/render_walls.c \
   src/player.c \
   src/utils.c \
+  src/utils1.c \
   src/check_walls.c \
   src/gc_malloc.c \
   src/gc_utils.c \
   src/gc_split.c \
   src/init_player.c \
+  src/mlx_load_texture.c \
   src/mlx_setup.c \
   src/keypress.c \
   src/pad_map_grid.c \

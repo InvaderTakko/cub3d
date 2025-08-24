@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sruff <sruff@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/24 21:22:46 by sruff             #+#    #+#             */
+/*   Updated: 2025/08/24 21:23:56 by sruff            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 
 char	**str_array_dup(char **src, int32_t height)
@@ -16,8 +28,6 @@ char	**str_array_dup(char **src, int32_t height)
 		dest[i] = gc_strdup(src[i]);
 		if (!dest[i])
 		{
-			// If gc_strdup fails, gc will handle cleanup.
-			// No need for free_str_array(dest, i); here.
 			return (NULL);
 		}
 		i++;
@@ -69,27 +79,4 @@ int32_t	exit_with_error(const char *message, t_app *app)
 	gc_free_all();
 	exit(1);
 	return (1);
-}
-
-char	*ft_strstr(const char *haystack, const char *needle)
-{
-	const char *h = {0};
-	const char *n = {0};
-
-	if (!*needle)
-		return ((char *)haystack);
-	while (*haystack)
-	{
-		h = haystack;
-		n = needle;
-		while (*h && *n && *h == *n)
-		{
-			h++;
-			n++;
-		}
-		if (!*n)
-			return ((char *)haystack);
-		haystack++;
-	}
-	return (NULL);
 }
