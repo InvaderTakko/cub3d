@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 16:05:25 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 14:00:40 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:30:09 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,25 @@ static void	load_all_textures(t_app *app)
 	load_south_texture(app);
 	load_east_texture(app);
 	load_west_texture(app);
+}
+
+void	cleanup_textures(t_images *img)
+{
+	if (!img)
+		return;
+	delete_textures(img);
+}
+
+void	cleanup_mlx(t_app *app)
+{
+	if (!app)
+		return ;
+	if (app->img)
+		cleanup_textures(app->img);
+	if (app->img && app->img->screen)
+		mlx_delete_image(app->mlx, app->img->screen);
+	if (app->mlx)
+		mlx_terminate(app->mlx);
 }
 
 void	mlx_setup(t_app *app)

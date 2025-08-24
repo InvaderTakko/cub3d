@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:14:56 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/24 14:17:26 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:26:56 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int32_t	main(int32_t argc, char **argv)
 	mlx_setup(app);
 	mlx_loop_hook(app->mlx, main_loop_hook, app);
 	mlx_loop(app->mlx);
+	cleanup_mlx(app);
 	gc_free_all();
 	system("leaks cub3d");
 	return (0);

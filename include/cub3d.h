@@ -6,7 +6,7 @@
 /*   By: stefan <stefan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/05 15:17:10 by sruff             #+#    #+#             */
-/*   Updated: 2025/08/14 16:40:12 by stefan           ###   ########.fr       */
+/*   Updated: 2025/08/24 14:27:11 by stefan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,7 @@ char	**str_array_dup(char **src, int32_t height);
 
 // mlx_setup
 void mlx_setup(t_app *app);
+void cleanup_mlx(t_app *app);
 
 // map parsing
 int32_t parse_map(t_app *app, const char *file);
